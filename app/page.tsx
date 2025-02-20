@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Form from "@/components/Form";
 import Nav from "@/components/Nav";
 import ChatElements from "@/components/ChatElements";
@@ -22,16 +22,16 @@ export default function Home() {
   const [sumError, setSumError] = useState<string>("");
   const [index, setIndex] = useState(-1);
 
-  useEffect(() => {
-    // const userAgent = navigator.userAgent.toLowerCase();
-    const isChrome = window;
-    // console.log(isChrome);
-    if (!isChrome) {
-      setOnChrome(false);
-    } else {
-      setOnChrome(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const userAgent = navigator.userAgent.toLowerCase();
+  //   const isChrome = window;
+  //   // console.log(isChrome);
+  //   if (!isChrome) {
+  //     setOnChrome(false);
+  //   } else {
+  //     setOnChrome(true);
+  //   }
+  // }, []);
 
   return (
     <main className="flex flex-col items-center relative justify-start w-[100%]">
