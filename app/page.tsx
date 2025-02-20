@@ -24,7 +24,7 @@ export default function Home() {
 
   useEffect(() => {
     // const userAgent = navigator.userAgent.toLowerCase();
-    const isChrome = window && window.ai;
+    const isChrome = window;
     // console.log(isChrome);
     if (!isChrome) {
       setOnChrome(false);
@@ -42,7 +42,7 @@ export default function Home() {
       )}
       {onChrome === true && (
         <>
-          <Nav setChat={setChat} setInitialized ={setInitialized}/>
+          <Nav setChat={setChat} setInitialized={setInitialized} />
           {initialised && (
             <section className="max-w-[700px] w-[98%] flex flex-col gap-[28px] overflow-y-scroll fixed top-[90px] px-[6px] pb-[10px]">
               {chat.length > 0 && (
