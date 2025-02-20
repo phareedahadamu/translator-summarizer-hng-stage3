@@ -87,7 +87,7 @@ export default function ChatElements(props: {
 
             //   console.log(lang, c.language);
             const response = await translate(c.language, String(lang), c.text);
-            setTransLoading(false);
+
             const newChat = props.chat.slice(i, i + 1)[0];
             newChat.translation = response;
             //   console.log(newChat);
@@ -95,6 +95,7 @@ export default function ChatElements(props: {
             allChats[i] = newChat;
             //   console.log(allChats);
             props.setChat(allChats);
+            setTransLoading(false);
           }}
           className="flex self-stretch relative justify-start gap-[24px] max-w-[280px] w-[100%]"
         >
