@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { Head } from "next/head";
+import Head from "next/head";
 
 const monty = Montserrat({
   variable: "--font-montserrat",
