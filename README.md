@@ -16,6 +16,7 @@ A simple web application that leverages Google Chromes AI models (Translator, La
 ## Note:
 
 The AI Models are not yet compatible with mobile devices and also only work on Google chrome browser
+Origin trials expire on the 11th of june 2025.
 
 ## How to run the project
 

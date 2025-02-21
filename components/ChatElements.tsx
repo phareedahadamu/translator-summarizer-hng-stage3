@@ -22,6 +22,8 @@ export default function ChatElements(props: {
   isPendingTrans: boolean;
   startTransitionSum: (fn: () => void) => void;
   startTransitionTrans: (fn: () => void) => void;
+  setTranslationErr: (value: boolean) => void;
+  setSummaryErr: (value: boolean) => void;
 }) {
   const chatRef = useRef<null | HTMLDivElement>(null);
   const [targetLang, setTargetLang] = useState("");
@@ -70,6 +72,10 @@ export default function ChatElements(props: {
         <hr />
         <form
           action={(fd) => {
+            if (!("ai" in self) || !("translator" in self.ai)) {
+              props.setTranslationErr(true);
+              return;
+            }
             props.setIndex(i);
             const lang = fd.get("transLanguage");
             //   console.log(lang);
@@ -145,64 +151,72 @@ export default function ChatElements(props: {
           </p>
         )}
         <hr />
-        <div className="relative flex flex-col gap-[10px] self-stretch w-[100%]">
-          {props.index === i && props.sumError !== "" && (
-            <p className="absolute top-[-20px] text-red-500 animate-pulse text-[14px]">
-              {props.sumError}
-            </p>
-          )}
-          <form
-            action={() => {
-              //   console.log(e.target);
-              props.setIndex(i);
-              if (c.language !== "en") {
-                props.setSumError("Text be in English");
-                setTimeout(() => {
-                  props.setSumError("");
-                }, 2000);
-                return;
-              }
-              if (c.text.length < 150) {
-                props.setSumError("Text should be at least 150 characters");
-                setTimeout(() => {
-                  props.setSumError("");
-                }, 2000);
-
-                return;
-              }
-              props.startTransitionSum(async () => {
-                try {
-                  const summary = await summarize(c.text);
-                  const newChat = props.chat.slice(i, i + 1)[0];
-                  newChat.summary = summary;
-                  //   console.log(newChat);
-                  const allChats = props.chat.slice();
-                  allChats[i] = newChat;
-                  //   console.log(allChats);
-                  props.setChat(allChats);
-                } catch {
-                  alert(
-                    "Summarizer is not compatible on this device / browser"
-                  );
+        {c.text.length > 150 && c.language === "en" && (
+          <div className="relative flex flex-col gap-[10px] self-stretch w-[100%]">
+            {props.index === i && props.sumError !== "" && (
+              <p className="absolute top-[-20px] text-red-500 animate-pulse text-[14px]">
+                {props.sumError}
+              </p>
+            )}
+            <form
+              action={() => {
+                if (!("ai" in self) || !("summarizer" in self.ai)) {
+                  props.setSummaryErr(true);
+                  return;
                 }
-              });
-            }}
-          >
-            <button
-              className="rounded-[5px] text-[#669df6] border-[2px] border-[#669df6] max-w-[138.4px] w-[100%] relative"
-              disabled={props.isPendingSum}
+                //   console.log(e.target);
+                props.setIndex(i);
+                if (c.language !== "en") {
+                  props.setSumError("Text should be in English");
+                  setTimeout(() => {
+                    props.setSumError("");
+                  }, 2000);
+                  return;
+                }
+                if (c.text.length < 151) {
+                  props.setSumError(
+                    "Text should be at more than 150 characters"
+                  );
+                  setTimeout(() => {
+                    props.setSumError("");
+                  }, 2000);
+
+                  return;
+                }
+                props.startTransitionSum(async () => {
+                  try {
+                    const summary = await summarize(c.text);
+                    const newChat = props.chat.slice(i, i + 1)[0];
+                    newChat.summary = summary;
+                    //   console.log(newChat);
+                    const allChats = props.chat.slice();
+                    allChats[i] = newChat;
+                    //   console.log(allChats);
+                    props.setChat(allChats);
+                  } catch {
+                    alert(
+                      "Summarizer is not compatible on this device / browser"
+                    );
+                  }
+                });
+              }}
             >
-              Summarize
-            </button>
-          </form>
-          {c.summary !== "" && (
-            <p>
-              <span className="text-[12px] text-[#647b95]">Summary:</span>
-              <br />
-              {c.summary}
-            </p>
-          )}
-        </div>
+              <button
+                className="rounded-[5px] text-[#669df6] border-[2px] border-[#669df6] max-w-[138.4px] w-[100%] relative"
+                disabled={props.isPendingSum}
+              >
+                Summarize
+              </button>
+            </form>
+            {c.summary !== "" && (
+              <p>
+                <span className="text-[12px] text-[#647b95]">Summary:</span>
+                <br />
+                {c.summary}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     );
   });

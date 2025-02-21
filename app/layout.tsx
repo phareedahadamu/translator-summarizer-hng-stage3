@@ -24,19 +24,19 @@ export default function RootLayout({
         {/* Origin Trial Token for AI LanguageDetector */}
         <meta
           httpEquiv="Origin-Trial"
-          content="AtiklNgJkoIGXstgg+ZsOS2JN/e3pGLhZnLJoOpatbyDdy1d8YqOIswvCd/MagragZSHXbig7XhyCH4jUKhQNgUAAAB+eyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiTGFuZ3VhZ2VEZXRlY3Rpb25BUEkiLCJleHBpcnkiOjE3NDk1OTk5OTl9"
+          content="AkhtP5xAdMPJDPlhHQpSN2EpKRUETOULCsuKULX9sZoGjBYQwUG9KGUN81wte8t9wOIytRh1bm7of1fPsI1KmQoAAACReyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiTGFuZ3VhZ2VEZXRlY3Rpb25BUEkiLCJleHBpcnkiOjE3NDk1OTk5OTksImlzU3ViZG9tYWluIjp0cnVlfQ=="
         />
 
         {/* Origin Trial Token for AI Translator */}
         <meta
           httpEquiv="Origin-Trial"
-          content="AvqeNOiAF964R6O647XbWppy+tmOiff1Vaz2lsGVjE1ul9nuaDhgF4XXO11V6O0GTsugwlVDS01OvSdTM0nGyQoAAAB4eyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiVHJhbnNsYXRpb25BUEkiLCJleHBpcnkiOjE3NTMxNDI0MDB9"
+          content="AuTbatY1CvPpcQgXcxNti0e7jCk/4ryzA9ldCX6EPKQK9I95mu2WE50+lyvuzmBVhSUSOrr0QmcltZUWDSKXKggAAACLeyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiVHJhbnNsYXRpb25BUEkiLCJleHBpcnkiOjE3NTMxNDI0MDAsImlzU3ViZG9tYWluIjp0cnVlfQ=="
         />
 
         {/* Origin Trial Token for AI Summarizer */}
         <meta
           httpEquiv="Origin-Trial"
-          content="AhPwzm+mBkYX5MDJ6CxFLTx32qJgQMewSZGNICBaT6Qr5xKzPGq48lRFqSFMg8pDktIbsS3bh+Jo4mqTiqT2RgEAAAB8eyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiQUlTdW1tYXJpemF0aW9uQVBJIiwiZXhwaXJ5IjoxNzUzMTQyNDAwfQ=="
+          content="AvENn/7//IswDtswsFct8KsuCoNJKA+3VPjbiFLMTz/VQhrkaREDN/Cas1zV/pnICbl2fhnnV31UcPWur+ijbwUAAACPeyJvcmlnaW4iOiJodHRwczovL3BoYXJlZWRhaGFkYW11LXN1bW1hcml6ZXItdHJhbnNsYXRvci5uZXRsaWZ5LmFwcDo0NDMiLCJmZWF0dXJlIjoiQUlTdW1tYXJpemF0aW9uQVBJIiwiZXhwaXJ5IjoxNzUzMTQyNDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZX0="
         />
       </Head>
       <body

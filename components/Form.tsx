@@ -15,8 +15,13 @@ export default function Form(props: {
   setInitialized: (value: boolean) => void;
   chat: Chat[] | [];
   setChat: (value: Chat[] | []) => void;
+  setDetectionErr: (value: boolean) => void;
 }) {
   async function submitInput(fd: FormData) {
+    if (!("ai" in self) || !("languageDetector" in self.ai)) {
+      props.setDetectionErr(true);
+      return;
+    }
     const inputText = fd.get("input");
     if (
       !inputText ||
