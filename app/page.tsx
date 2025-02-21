@@ -76,18 +76,18 @@ export default function Home() {
           </h1>
         )}
         {detectionErr && (
-          <p className="fixed top-[28px] animate-pulse text-[18px] text-red-500">
-            Language Detection AI not compatible with device / browser.
+          <p className="text-red-500 animate-pulse fixed top-[65px] text-[12px] text-center">
+            Language Detection AI not available on your device.
           </p>
         )}
         {isPendingSum && (
-          <p className="fixed top-[28px] animate-pulse text-[18px] text-green-600">
+          <p className="fixed top-[28px] animate-pulse text-[14px] text-green-600">
             Summarizing...
           </p>
         )}
         {isPendingTrans && (
-          <p className=" fixed top-[28px] animate-pulse text-[18px] text-green-600">
-            Fetching translation
+          <p className=" fixed top-[28px] animate-pulse text-[14px] text-green-600">
+            Translating...
           </p>
         )}
         {errors && (
@@ -96,13 +96,17 @@ export default function Home() {
           </p>
         )}
         {translationErr && (
-          <p className={`text-red-500 animate-pulse fixed top-[28px]`}>
-            Translation AI not compatible with device / browser.
+          <p
+            className={`text-red-500 animate-pulse fixed top-[65px] text-[12px] text-center`}
+          >
+            Translation AI not available on your device.
           </p>
         )}
         {summaryErr && (
-          <p className={`text-red-500 animate-pulse fixed top-[28px]`}>
-            Summary AI not compatible with device / browser.
+          <p
+            className={`text-red-500 animate-pulse fixed top-[65px] text-[12px] text-center`}
+          >
+            Summary AI not available on your device.
           </p>
         )}
         {/* here */}
