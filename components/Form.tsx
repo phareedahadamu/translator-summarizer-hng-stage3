@@ -33,30 +33,34 @@ export default function Form(props: {
     props.setCharsCount(0);
 
     // console.log(inputText);
-    const lang = await detectLang(inputText as string);
-    const language = lang;
-    // console.log(language);
-    if (props.chat.length === 0) {
-      props.setChat([
-        {
-          text: String(inputText),
-          summary: "",
-          translation: "",
-          language: language,
-        },
-      ]);
-    } else {
-      props.setChat([
-        ...props.chat,
-        {
-          text: String(inputText),
-          summary: "",
-          translation: "",
-          language: language,
-        },
-      ]);
+    try {
+      const lang = await detectLang(inputText as string);
+      const language = lang;
+      // console.log(language);
+      if (props.chat.length === 0) {
+        props.setChat([
+          {
+            text: String(inputText),
+            summary: "",
+            translation: "",
+            language: language,
+          },
+        ]);
+      } else {
+        props.setChat([
+          ...props.chat,
+          {
+            text: String(inputText),
+            summary: "",
+            translation: "",
+            language: language,
+          },
+        ]);
+      }
+      props.setInitialized(true);
+    } catch {
+      alert("Language detector is not compatible on this device / browser");
     }
-    props.setInitialized(true);
   }
   return (
     <form
@@ -69,6 +73,16 @@ export default function Form(props: {
         className="px-[16px] py-[8px]"
         rows={3}
         name="input"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            // console.log(e.currentTarget.value);
+            const formData = new FormData();
+            formData.append("input", e.currentTarget.value);
+            submitInput(formData);
+            e.currentTarget.value = "";
+          }
+        }}
         onKeyUp={(e) => {
           // console.log(e.currentTarget.value);
           props.setCharsCount(e.currentTarget.value.length);

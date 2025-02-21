@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Form from "@/components/Form";
 import Nav from "@/components/Nav";
 import ChatElements from "@/components/ChatElements";
@@ -21,6 +21,8 @@ export default function Home() {
   const [transError, setTransError] = useState<string>("");
   const [sumError, setSumError] = useState<string>("");
   const [index, setIndex] = useState(-1);
+  const [isPendingSum, startTransitionSum] = useTransition();
+  const [isPendingTrans, startTransitionTrans] = useTransition();
 
   // useEffect(() => {
   //   // const userAgent = navigator.userAgent.toLowerCase();
@@ -55,6 +57,10 @@ export default function Home() {
                 setSumError={setSumError}
                 index={index}
                 setIndex={setIndex}
+                isPendingSum={isPendingSum}
+                isPendingTrans={isPendingTrans}
+                startTransitionSum={startTransitionSum}
+                startTransitionTrans={startTransitionTrans}
               />
             )}
           </section>
@@ -63,6 +69,16 @@ export default function Home() {
           <h1 className="mt-[240px] text-[24px] sm:text-[32px] font-semibold text-center text-[#647b95]">
             Enter text to translate or summarize.
           </h1>
+        )}
+        {isPendingSum && (
+          <p className="fixed top-[28px] animate-pulse text-[18px] text-green-600">
+            Summarizing...
+          </p>
+        )}
+        {isPendingTrans && (
+          <p className=" fixed top-[28px] animate-pulse text-[18px] text-green-600">
+            Fetching translation
+          </p>
         )}
         {errors && (
           <p

@@ -18,11 +18,13 @@ export default function ChatElements(props: {
   setSumError: (value: string) => void;
   index: number;
   setIndex: (value: number) => void;
+  isPendingSum: boolean;
+  isPendingTrans: boolean;
+  startTransitionSum: (fn: () => void) => void;
+  startTransitionTrans: (fn: () => void) => void;
 }) {
   const chatRef = useRef<null | HTMLDivElement>(null);
   const [targetLang, setTargetLang] = useState("");
-  const [transLoading, setTransLoading] = useState<boolean>(false);
-  const [sumLoading, setSumLoading] = useState<boolean>(false);
 
   if (chatRef.current) {
     chatRef.current.scrollIntoView();
@@ -67,7 +69,7 @@ export default function ChatElements(props: {
         </div>
         <hr />
         <form
-          action={async (fd) => {
+          action={(fd) => {
             props.setIndex(i);
             const lang = fd.get("transLanguage");
             //   console.log(lang);
@@ -78,7 +80,6 @@ export default function ChatElements(props: {
               }, 2000);
               return;
             }
-            setTransLoading(true);
             for (const [key, value] of Object.entries(transLanguages)) {
               if (key === lang) {
                 setTargetLang(value);
@@ -86,16 +87,25 @@ export default function ChatElements(props: {
             }
 
             //   console.log(lang, c.language);
-            const response = await translate(c.language, String(lang), c.text);
+            props.startTransitionTrans(async () => {
+              try {
+                const response = await translate(
+                  c.language,
+                  String(lang),
+                  c.text
+                );
 
-            const newChat = props.chat.slice(i, i + 1)[0];
-            newChat.translation = response;
-            //   console.log(newChat);
-            const allChats = props.chat.slice();
-            allChats[i] = newChat;
-            //   console.log(allChats);
-            props.setChat(allChats);
-            setTransLoading(false);
+                const newChat = props.chat.slice(i, i + 1)[0];
+                newChat.translation = response;
+                //   console.log(newChat);
+                const allChats = props.chat.slice();
+                allChats[i] = newChat;
+                //   console.log(allChats);
+                props.setChat(allChats);
+              } catch {
+                alert("Translator is not compatible on this device / browser");
+              }
+            });
           }}
           className="flex self-stretch relative justify-start gap-[24px] max-w-[280px] w-[100%]"
         >
@@ -109,7 +119,7 @@ export default function ChatElements(props: {
             defaultValue="default"
             className="text-[#647b95] text-[14px] rounded-[5px]"
             required
-            disabled={transLoading}
+            disabled={props.isPendingTrans}
           >
             <option value="default" disabled>
               Choose a language
@@ -118,16 +128,11 @@ export default function ChatElements(props: {
           </select>
           <button
             type="submit"
-            disabled={transLoading}
+            disabled={props.isPendingTrans}
             className="text-[16px] flex-grow py-[4px] bg-[#669df6] leading-snug rounded-[5px] text-[#FFF]"
           >
             Translate
           </button>
-          {transLoading && props.index === i && (
-            <p className="absolute bottom-[-20px] animate-pulse text-[14px] text-[#669df6]">
-              Fetching translation
-            </p>
-          )}
         </form>
 
         {c.translation !== "" && (
@@ -147,7 +152,7 @@ export default function ChatElements(props: {
             </p>
           )}
           <form
-            action={async () => {
+            action={() => {
               //   console.log(e.target);
               props.setIndex(i);
               if (c.language !== "en") {
@@ -165,27 +170,30 @@ export default function ChatElements(props: {
 
                 return;
               }
-
-              setSumLoading(true);
-              const summary = await summarize(c.text);
-              const newChat = props.chat.slice(i, i + 1)[0];
-              newChat.summary = summary;
-              //   console.log(newChat);
-              const allChats = props.chat.slice();
-              allChats[i] = newChat;
-              //   console.log(allChats);
-              props.setChat(allChats);
-              setSumLoading(false);
+              props.startTransitionSum(async () => {
+                try {
+                  const summary = await summarize(c.text);
+                  const newChat = props.chat.slice(i, i + 1)[0];
+                  newChat.summary = summary;
+                  //   console.log(newChat);
+                  const allChats = props.chat.slice();
+                  allChats[i] = newChat;
+                  //   console.log(allChats);
+                  props.setChat(allChats);
+                } catch {
+                  alert(
+                    "Summarizer is not compatible on this device / browser"
+                  );
+                }
+              });
             }}
           >
-            <button className="rounded-[5px] text-[#669df6] border-[2px] border-[#669df6] max-w-[138.4px] w-[100%] relative">
+            <button
+              className="rounded-[5px] text-[#669df6] border-[2px] border-[#669df6] max-w-[138.4px] w-[100%] relative"
+              disabled={props.isPendingSum}
+            >
               Summarize
             </button>
-            {props.index === i && sumLoading && (
-              <p className="absolute top-[24px] animate-pulse text-[14px] text-[#669df6]">
-                Summarizing...
-              </p>
-            )}
           </form>
           {c.summary !== "" && (
             <p>
